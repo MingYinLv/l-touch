@@ -1,0 +1,22 @@
+{
+  "name": "l-touch",
+  "version": "1.0.0",
+  "description": "touch",
+  "main": "lib/LTouch.min.js",
+  "scripts": {
+    "test": "no test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvmingyin/l-touch.git"
+  },
+  "keywords": [
+    "touch"
+  ],
+  "author": "lvmingyin",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/lvmingyin/l-touch/issues"
+  },
+  "homepage": "https://github.com/lvmingyin/l-touch#readme"
+}
