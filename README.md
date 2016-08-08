@@ -6,22 +6,14 @@
 
 1.`domObj` *(Element)*: `必选`,触发事件的节点。
 
-2.`config:start` *(Number)*: `可选`,倒计时开始时间,默认值`59`.
+2.`option`  *(Object)*: `必选`，初始化参数
 
-3.`config:end` *(Number)*: `可选`,倒计时结束时间，默认值`0`.
+    `touchLeft` *(Function)*: `可选`,左滑
+    `touchRight` *(Function)*: `可选`,右滑
+    `touchTop` *(Function)*: `可选`,上滑
+    `touchBottom` *(Function)*: `可选`,下滑
+    `touchStart` *(Function)*: `可选`,手指按下
+    `touchEnd` *(Function)*: `可选`,手指松开
+    `touchMove` *(Function)*: `可选`,手指移动
+    `offset` *(Function)*: `可选`,手指移动超过多少触发touchLeft,touchRight,touchTop,touchBottom,默认0
 
-3.`config:disabledCls` *(String)*: `可选`,倒计时过程中元素的样式，默认值`disabled`.
-
-5.`config:inText` *(String)*: `可选`,倒计时过程中显示的文字，默认值`重发({i}s)`，会自动替换`{i}`为当前时间.
-
-6.`config:callback` *(Function)*: `可选`,点击按钮后的回调函数，这里进行异步操作.
-
-#### Returns `Object`
-
-1.`destroy` *(Function)*: 销毁对象.
-
-2.`success` *(Function)*: 开始倒计时，在`config:callback`中异步操作成功后调用.
-
-3.`failed` *(Function)*: ajax调用失败后在`config:callback`中调用.
-
-4.`getNum` *(Function)*: 返回当前共进行过几次倒计时，每次调用`start`方法会加1.
