@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,minimum-scale=1.0">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta content="telephone=no" name="format-detection"/>
+    <title>Touch</title>
+    <style>
+        body, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .banner_box {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .banner_box ul {
+            width: 800%;
+            list-style: none;
+        }
+
+        .banner_box ul li {
+            float: left;
+        }
+
+        .banner {
+            height: 220px;
+            width: 100%;
+            background: url("") no-repeat center top;
+        }
+
+        .banner1 {
+            background-image: url("src/img/1.png");
+        }
+
+        .banner2 {
+            background-image: url("src/img/2.png");
+        }
+
+        .banner3 {
+            background-image: url("src/img/3.png");
+        }
+    </style>
+</head>
+<body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<div id="banner1" class="banner_box">
+    <ul>
+        <li class="banner banner1"></li>
+        <li class="banner banner2"></li>
+        <li class="banner banner3"></li>
+    </ul>
+</div>
+<script src="src/LTouch.js"></script>
+<script>
+    (function () {
+        var index = 0;  //当前轮播图索引
+        var position = 0; //当前位置
+        var startTime = 0;
+        var winWidth = document.documentElement.clientWidth;    //页面宽度
+        var offsetWidth = winWidth / 2; //滚动超过多少切换到下一张
+        var bannerBox = document.querySelector('#banner1'); //最外层div
+        var ul = bannerBox.querySelector('ul');
+        var lis = bannerBox.querySelectorAll('li'); //所有轮播图片
+        ul.style.width = winWidth * lis.length + 'px';   //设置ul的宽度
+        var min = -winWidth * (lis.length - 1), max = 0;
+        Array.prototype.slice.apply(lis).forEach(function (item) {  //循环设置
+            item.style.width = winWidth + 'px';
+        });
+        //初始化
+        LTouch(document.querySelector('#banner1'), {
+            touchMove: function (e, x) {
+                if (position + x < max && position + x > min) {
+                    ul.style.transform = 'translate3d(' + (position + x) + 'px,0,0)';
+                }
+            },
+            touchStart: function () {
+                ul.style.transitionDuration = '0ms';
+                startTime = new Date().getTime();
+            },
+            touchLeft: function (e, x) {
+                x = x < 0 ? -x : x;
+                if ((x > offsetWidth || new Date().getTime() - startTime < 100) && index < lis.length - 1) {
+                    index++;
+                }
+                ul.style.transitionDuration = '300ms';
+                position = -index * winWidth;
+                ul.style.transform = 'translate3d(' + (position) + 'px,0,0)';
+
+            },
+            touchRight: function (e, x) {
+                x = x < 0 ? -x : x;
+                if ((x > offsetWidth || new Date().getTime() - startTime < 100) && index > 0) {
+                    index--;
+                }
+                ul.style.transitionDuration = '300ms';
+                position = -index * winWidth;
+                ul.style.transform = 'translate3d(' + (position) + 'px,0,0)';
+            },
+            touchEnd: function () {
+                startTime = 0;
+            }
+        });
+    })();
+</script>
+</body>
+</html>
