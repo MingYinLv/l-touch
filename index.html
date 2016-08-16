@@ -56,8 +56,17 @@
         <li class="banner banner3"></li>
     </ul>
 </div>
+<div id="banner2" class="banner_box">
+    <ul>
+        <li class="banner banner1"></li>
+        <li class="banner banner2"></li>
+        <li class="banner banner3"></li>
+    </ul>
+</div>
 <script src="lib/LTouch.min.js"></script>
+<!--<script src="src/LTouch.js"></script>-->
 <script>
+    var b1, b2;
     (function () {
         var index = 0;  //当前轮播图索引
         var position = 0; //当前位置
@@ -73,7 +82,7 @@
             item.style.width = winWidth + 'px';
         });
         //初始化
-        LTouch(document.querySelector('#banner1'), {
+        b1 = bannerBox.onTouch({
             touchMove: function (e, x) {
                 if (position + x < max && position + x > min) {
                     ul.style.transform = 'translate3d(' + (position + x) + 'px,0,0)';
@@ -105,6 +114,51 @@
             touchEnd: function () {
                 startTime = 0;
             }
+        });
+    })();
+
+
+    (function () {
+        var index = 0;  //当前轮播图索引
+        var position = 0; //当前位置
+        var startTime = 0;
+        var winWidth = document.documentElement.clientWidth;    //页面宽度
+        var offsetWidth = winWidth / 2; //滚动超过多少切换到下一张
+        var bannerBox = document.querySelector('#banner2'); //最外层div
+        var ul = bannerBox.querySelector('ul');
+        var lis = bannerBox.querySelectorAll('li'); //所有轮播图片
+        ul.style.width = winWidth * lis.length + 'px';   //设置ul的宽度
+        var min = -winWidth * (lis.length - 1), max = 0;
+        Array.prototype.slice.apply(lis).forEach(function (item) {  //循环设置
+            item.style.width = winWidth + 'px';
+        });
+        //初始化
+        b2 = bannerBox.onTouch()
+        .touchStart(function () {
+            ul.style.transitionDuration = '0ms';
+            startTime = new Date().getTime();
+        }).touchMove(function (e, x) {
+            if (position + x < max && position + x > min) {
+                ul.style.transform = 'translate3d(' + (position + x) + 'px,0,0)';
+            }
+        }).touchEnd(function () {
+            startTime = 0;
+        }).touchLeft(function (e, x) {
+            x = x < 0 ? -x : x;
+            if ((x > offsetWidth || new Date().getTime() - startTime < 100) && index < lis.length - 1) {
+                index++;
+            }
+            ul.style.transitionDuration = '300ms';
+            position = -index * winWidth;
+            ul.style.transform = 'translate3d(' + (position) + 'px,0,0)';
+        }).touchRight(function (e, x) {
+            x = x < 0 ? -x : x;
+            if ((x > offsetWidth || new Date().getTime() - startTime < 100) && index > 0) {
+                index--;
+            }
+            ul.style.transitionDuration = '300ms';
+            position = -index * winWidth;
+            ul.style.transform = 'translate3d(' + (position) + 'px,0,0)';
         });
     })();
 </script>
