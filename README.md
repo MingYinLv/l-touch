@@ -15,5 +15,4 @@
     `touchMove` *(Function)*: `可选`,手指移动
     `offset` *(Function)*: `可选`,手指移动超过多少触发touchLeft,touchRight,touchTop,touchBottom,默认0
     
-支持Element.onTouch().touchLeft(function(){})... 链式调用
 
